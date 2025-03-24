@@ -33,4 +33,6 @@ There are six different configuration files:
 All the control is realatively from the base_link. 
 the urdf of the sfr arm need to be upload as:
 /home/lasapc/Documents/ROS2-robetarme/robetarme_integration_wp5.2/src/wp5-robotic-arms/urdf/robetarme.urdf
-
+and can be saved from Cobod pkg with:
+ros2 run xacro xacro src/manipulator/Cobod_RoBetArme_ROS2_Description/urdf/robetarme.urdf.xacro > src/manipulator/Cobod_RoBetArme_ROS2_Description/urdf/robetarme_shot.urdf name:=robetarme use_mock_hardware:=true ee_type:=shotcret
+e
