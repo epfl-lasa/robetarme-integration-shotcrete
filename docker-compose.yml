@@ -1,0 +1,81 @@
+################################################################################
+# There are three places where your actions are needed in this compose file
+# These are marked with the label `ACTIONS_NEEDED`.
+################################################################################
+
+services:
+  ros_humble_a10_development:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # ACTIONS_NEEDED
+    # The name of the image consists of two parts.
+    # The first is the prefix
+    # `registry.gitlab.com/certh-iti-robotics-lab/robetarme/robetarme/ros-noetic-`.
+    # The second part should be a unique byte in hexadecimal format.
+    # In order to determine it visit:
+    # https://www.random.org/cgi-bin/randbyte?nbytes=1&format=h
+    # Then make sure no one is using the same id by checking the suffixes of
+    # images of the same ROS version at:
+    # https://gitlab.com/certh-iti-robotics-lab/robetarme/RoBetArme/container_registry.
+    # Then modify line #2 of this file accordingly.
+    image: registry.gitlab.com/certh-iti-robotics-lab/robetarme/robetarme/ros-humble-a10:development
+
+    # ACTIONS_NEEDED
+    # The same naming convention applies to the container's name as well.
+    # The first part is the prefix
+    # `ros_noetic_`. Then the byte id, and at the end `_development_container`.
+    container_name: ros_humble_a10_development_container
+    network_mode: "host"
+    privileged: True
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    stdin_open: true
+    tty: true
+    ipc: host
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - RMW_IMPLEMENTATION=${RMW_IMPLEMENTATION}
+      # - ROS_DISCOVERY_SERVER=${ROS_DISCOVERY_SERVER}
+    volumes:
+      # ACTIONS_NEEDED
+      # You may communicate between the container and the host via
+      # a shared directory. The name of the directory on the host should be the
+      # same as the suffix of the image, prefixed with the word `shared`,
+      # e.g. [shared]-[ros-noetic-92]
+      # On the container's side this directory sits at
+      # `/home/robetarme_user/shared/`.
+      # You should name the former but not the latter.
+      # The directory should already exist before running
+      # `docker compose build` on the host, so first execute the three
+      # following commands there:
+      # ```
+      # cd $WHERE_THIS_DOCKER-COMPOSE.YML_FILE_IS
+      # mkdir shared-ros-noetic-92
+      # sudo chown -R $USER shared-ros-noetic-92
+      # ```
+      # You may place the shared directory wherever you like on your host,
+      # but if you do so you need to modify the left-hand side of the below mapping.
+      - ./shared-ros-humble-9f:/home/robetarme_user/shared:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+      - /run/user/1000/gdm/Xauthority:/run/user/1000/gdm/Xauthority
+      - /dev:/dev
+      - ./src:/home/robetarme_user/ros2_ws/src
+      - ./config:/home/robetarme_user/ros2_ws/config
+      - ./data:/home/robetarme_user/ros2_ws/data
+    devices:
+      - /dev:/dev

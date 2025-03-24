@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="3">
+    <name>wp5_robotic_arms</name>
+    <version>1.0.0</version>
+    <description>Drivers to use different robotic arms</description>
+
+    <maintainer email="lmunier@protonmail.com">Louis Munier</maintainer>
+    <maintainer email="tristan_bonato@hotmail.com">Tristan Bonato</maintainer>
+
+    <license>BSD</license>
+
+    <!-- Build tools -->
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    <buildtool_depend>pybind11</buildtool_depend>
+    <!-- <buildtool_depend>wp5_tools</buildtool_depend> -->
+
+    <!-- Dependencies -->
+    <!-- <depend>trac_ik_lib</depend> -->
+    <depend>rclcpp</depend>
+    <depend>rclpy</depend>
+    <depend>yaml-cpp</depend>
+    <depend>Eigen3</depend>
+    <!-- <depend>robetarme_description</depend> -->
+    <depend>control_libraries</depend>
+    <depend>OsqpEigen</depend>
+
+    <!-- Export dependencies -->
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>

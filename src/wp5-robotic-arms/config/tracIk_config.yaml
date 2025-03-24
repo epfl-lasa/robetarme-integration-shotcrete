@@ -1,0 +1,4 @@
+tracIK:
+  solve_type: 'Distance' # 'Distance' or 'Speed'
+  error: 0.000001
+  timeoutInSecs: 0.01

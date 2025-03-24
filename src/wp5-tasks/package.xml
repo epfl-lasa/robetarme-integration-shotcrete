@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>wp5_tasks</name>
+  <version>0.1.0</version>
+  <description>High-level tasks package using wp5-ros2-interface</description>
+
+  <!-- Maintainer -->
+  <maintainer email="youremail@example.com">Your Name</maintainer>
+
+  <!-- License -->
+  <license>BSD</license>
+
+  <!-- Build system -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+    <buildtool_depend>pybind11</buildtool_depend>
+
+  <!-- Dependencies -->
+  <depend>rclcpp</depend>
+  <depend>wp5_ros2_interface</depend>
+  <depend>wp5_robotic_arms</depend>
+  <!-- <depend>wp5_planner</depend> -->
+  <!-- <depend>wp5_tools</depend> -->
+  
+  <!-- Export build type -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,5 @@
+fromMesh: false
+meshPath : meshes/mesh_target_transformed.obj
+# meshPath : meshes/twist_scaled.obj
+pcdPath : pointclouds/transformed_model.ply
+# pcdPath : certh-data/Filtered_Point_Cloud1_cluster_0.xyz

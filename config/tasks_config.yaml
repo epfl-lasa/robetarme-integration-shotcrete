@@ -1,0 +1,10 @@
+shotcreteKUL:
+  robot_name: "robetarme" #robetarme ur5_robot
+  limitCycleSpeed: 3.14
+  convRate: 10
+  linearSpeed: 0.03
+  radFlow: 0.05 #this will set the limitcycle radius
+  limitCycleRadius: 0 #Not USED FOR SHOTCRETE
+  toleranceToNextPoint: 0.01
+  velocityLimit: 2
+  desiredForce: 0 #Not USED FOR SHOTCRETE

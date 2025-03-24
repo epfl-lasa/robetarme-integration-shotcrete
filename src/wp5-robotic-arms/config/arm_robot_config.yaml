@@ -1,0 +1,39 @@
+ur5_robot:
+  controller_joint_names: ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"]
+  # home_position: [-1.57, -1.0,-2.45, 0.5, 1.57, 1.57]
+  home_position: [0.0, -1.57, 0.0, -1.57, 0.0, -0.0]
+  reference_frame: "base_link"
+  tipLink: "tool0"
+  tipJoint: "wrist_3_joint"
+  numberJoint: 6
+  path_urdf: "/home/robetarme_user/ros2_ws/src/wp5-robotic-arms/urdf/ur5.urdf"
+  linear_principle_damping: 500.0
+  linear_orthogonal_damping: 100.0
+  angular_stiffness: 100.0
+  angular_damping: 101.0
+
+iiwa7:
+  controller_joint_names: ["iiwa_joint_1", "iiwa_joint_2", "iiwa_joint_3", "iiwa_joint_4", "iiwa_joint_5", "iiwa_joint_6", "iiwa_joint_7" ]
+  home_position: [0.0, 0.0, 0.0, -0.0, 0.0, -0.0]
+  reference_frame: "iiwa_link_0"
+  tipLink: "iiwa_link_ee"
+  tipJoint: "iiwa_joint_ee"
+  numberJoint: 7
+  path_urdf: "/home/robetarme_user/ros2_ws/src/wp5-robotic-arms/urdf/iiwa7.urdf"
+  linear_principle_damping: 150.0
+  linear_orthogonal_damping: 150.0
+  angular_stiffness: 3.0
+  angular_damping: 3.0
+
+robetarme:
+  controller_joint_names: ["Joint_0", "Joint_1", "Joint_2", "Joint_3", "Joint_4", "Joint_5", "Joint_6"]
+  home_position: [0.0, 1.0, -1.0, 0.0, 0.0, 0.0, 0.0]
+  reference_frame: "base_link"
+  tipLink: "tool0"
+  tipJoint: "Joint_6"
+  numberJoint: 7
+  path_urdf: "/home/robetarme_user/ros2_ws/src/wp5-robotic-arms/urdf/robetarme.urdf"
+  linear_principle_damping: 0.0
+  linear_orthogonal_damping: 0.0
+  angular_stiffness: 0.0
+  angular_damping: 0.0

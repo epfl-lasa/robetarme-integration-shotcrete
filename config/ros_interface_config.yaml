@@ -1,0 +1,11 @@
+robetarme:
+  joint_topic: "robot/joint_states"
+  joint_command: "/robot/velocity_controller/commands"
+  ft_topic: "/robotiq_ft_wrench"
+  actuator_spray_topic: "/actuator_spray/command"
+  number_joint: 7
+  topic_twist_kul_cmd: "/integration/ee_twist_cmd"
+  topic_twist_kul: "/integration/ee_twist"
+  topic_pose_kul: "/integration/ee_pose"
+  topic_camera: "/camera/depth/points_crop_transformed"
+  topic_mesh: "/mesh_target"

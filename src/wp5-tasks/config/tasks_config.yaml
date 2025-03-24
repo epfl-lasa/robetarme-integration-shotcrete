@@ -1,0 +1,23 @@
+shotcrete:
+  robot_name: "ur5_robot"
+  limitCycleSpeed: 4
+  convRate: 10
+  linearSpeed: 0.02
+  radFlow: 0.05 #this will set the limitcycle radius
+  limitCycleRadius: 0 #Not USED FOR SHOTCRETE
+  toleranceToNextPoint: 0.01
+  velocityLimit: 1
+  desiredForce: 0 #Not USED FOR SHOTCRETE
+
+surface_finishing:
+  robot_name: "ur5_robot"
+  limitCycleSpeed: 3.14
+  convRate: 3
+  linearSpeed: 0.01
+  radFlow: 0.0 #Not USED FOR SURFACE FINISHING
+  limitCycleRadius: 0.03
+  toleranceToNextPoint: 0.03
+  velocityLimit: 0.2
+  desiredForce: -20
+
+

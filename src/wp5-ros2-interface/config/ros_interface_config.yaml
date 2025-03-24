@@ -1,0 +1,31 @@
+ur5_robot:
+  joint_topic: "/ur5/joint_states"
+  joint_command: "/forward_velocity_controller/commands"
+  # joint_command: "/ur5/joint_group_pos_controller/command"
+  ft_topic: "/robotiq_ft_wrench"
+  actuator_spray_topic: "/actuator_spray/command"
+  number_joint: 6
+  topic_twist_kul_cmd: "/integration/ee_twist_cmd"
+  topic_twist_kul: "/integration/ee_twist"
+  topic_pose_kul: "/integration/ee_pose"
+  topic_camera: "/camera/depth/points_crop_transformed"
+  
+iiwa7:
+  joint_topic: "/iiwa/joint_states"
+  joint_command: "/iiwa/TorqueController/command"
+  ft_topic: ""
+  actuator_spray_topic: "/actuator_spray/command"
+  number_joint: 7
+  topic_twist_kul_cmd: "/integration/ee_twist_cmd"
+  topic_twist_kul: "/integration/ee_twist"
+  topic_pose_kul: "/integration/ee_pose"
+
+robetarme:
+  joint_topic: "/joint_states"
+  joint_command: "/velocity_controller/commands"
+  ft_topic: "/robotiq_ft_wrench"
+  actuator_spray_topic: "/actuator_spray/command"
+  number_joint: 7
+  topic_twist_kul_cmd: "/integration/ee_twist_cmd"
+  topic_twist_kul: "/integration/ee_twist"
+  topic_pose_kul: "/integration/ee_pose"
