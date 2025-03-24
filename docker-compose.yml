@@ -4,7 +4,7 @@
 ################################################################################
 
 services:
-  ros_humble_a10_development:
+  ros-humble-integration-shotcrete_container:
     env_file:
       - .env
     build:
@@ -21,13 +21,15 @@ services:
     # images of the same ROS version at:
     # https://gitlab.com/certh-iti-robotics-lab/robetarme/RoBetArme/container_registry.
     # Then modify line #2 of this file accordingly.
-    image: registry.gitlab.com/certh-iti-robotics-lab/robetarme/robetarme/ros-humble-a10:development
+    # image: epfl-lasa/robetarme/ros-humble-integration-shotcrete
+    image: ghcr.io/epfl-lasa/robetarme-integration-shotcrete/ros-humble-integration-shotcrete:latest
+    # image: registry.gitlab.com/certh-iti-robotics-lab/robetarme/robetarme/ros-humble-a10:development
 
     # ACTIONS_NEEDED
     # The same naming convention applies to the container's name as well.
     # The first part is the prefix
     # `ros_noetic_`. Then the byte id, and at the end `_development_container`.
-    container_name: ros_humble_a10_development_container
+    container_name: ros-humble-integration-shotcrete_container
     network_mode: "host"
     privileged: True
     deploy:
