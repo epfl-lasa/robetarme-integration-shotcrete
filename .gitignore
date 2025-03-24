@@ -10,7 +10,7 @@ __pycache__/
 #config file
 # config/*
 /**/.DS_Store
-.env
+# .env
 /log
 /build
 /install
