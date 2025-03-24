@@ -1,11 +1,6 @@
-[submodule "src/wp5-robotic-arms/libs/ik-geo-cpp"]
-	path = src/wp5-robotic-arms/libs/ik-geo-cpp
-	url = git@github.com:epfl-lasa/ik-geo-cpp.git
 [submodule "src/wp5-robotic-arms/libs/trac-ik"]
 	path = src/wp5-robotic-arms/libs/trac-ik
 	url = https://bitbucket.org/traclabs/trac_ik.git
 	branch = rolling-devel
-[submodule "src/rq_fts_ros2_driver"]
-	path = src/rq_fts_ros2_driver
-	url = git@github.com:panagelak/rq_fts_ros2_driver.git
+
 
