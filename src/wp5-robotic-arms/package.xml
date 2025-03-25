@@ -20,7 +20,6 @@
     <depend>rclpy</depend>
     <depend>yaml-cpp</depend>
     <depend>Eigen3</depend>
-    <!-- <depend>robetarme_description</depend> -->
     <depend>control_libraries</depend>
     <depend>OsqpEigen</depend>
 

@@ -2,5 +2,3 @@
 	path = src/wp5-robotic-arms/libs/trac-ik
 	url = https://bitbucket.org/traclabs/trac_ik.git
 	branch = rolling-devel
-
-
