@@ -61,7 +61,7 @@ RosInterfaceHumble::RosInterfaceHumble(const std::string &robotName) :
 
     // Initialize Service Server
     initShotcreteService_ = this->create_service<std_srvs::srv::Trigger>(
-        "/integration/initShotcrete",
+        "/integration/goWorkingPose",
         std::bind(
             &RosInterfaceHumble::initShotcreteServiceCallback, this, std::placeholders::_1, std::placeholders::_2));
     startShotcreteService_ = this->create_service<std_srvs::srv::Trigger>(
