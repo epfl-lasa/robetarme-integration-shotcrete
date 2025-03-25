@@ -138,12 +138,12 @@ bool RoboticArmCobod::saveTwistsToFiles(const std::string& desiredTwistFilename,
   return true;
 }
 
-std::pair<Eigen::Quaterniond, Eigen::Vector3d> RoboticArmCobod::getFKGeo(const std::vector<double>& jointPos) {
-  throw std::runtime_error("Forward kinematics from GEO not supported for Cobod");
-}
+// std::pair<Eigen::Quaterniond, Eigen::Vector3d> RoboticArmCobod::getFKGeo(const std::vector<double>& jointPos) {
+//   throw std::runtime_error("Forward kinematics from GEO not supported for Cobod");
+// }
 
-bool RoboticArmCobod::getIKGeo(const Eigen::Quaterniond& quaternion,
-                               const Eigen::Vector3d& position,
-                               std::vector<std::vector<double>>& jointPos) {
-  throw std::runtime_error("Inverse kinematics from GEO not supported for Cobod");
-}
+// bool RoboticArmCobod::getIKGeo(const Eigen::Quaterniond& quaternion,
+//                                const Eigen::Vector3d& position,
+//                                std::vector<std::vector<double>>& jointPos) {
+//   throw std::runtime_error("Inverse kinematics from GEO not supported for Cobod");
+// }

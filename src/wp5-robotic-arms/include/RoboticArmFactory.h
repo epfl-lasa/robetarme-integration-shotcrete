@@ -5,8 +5,6 @@
 
 #include "IRoboticArmBase.h"
 #include "RoboticArmCobod.h"
-#include "RoboticArmIiwa7.h"
-#include "RoboticArmUr5.h"
 
 class RoboticArmFactory {
 public:
@@ -14,8 +12,6 @@ public:
 
   //TODO(lmunier) : Add compatibility with the other robotic arms
   RoboticArmFactory() {
-    registerRobotArm("ur5_robot", []() { return std::make_unique<RoboticArmUr5>(); });
-    registerRobotArm("iiwa7", []() { return std::make_unique<RoboticArmIiwa7>(); });
     registerRobotArm("robetarme", []() { return std::make_unique<RoboticArmCobod>(); });
   }
 

@@ -1,8 +1,8 @@
 robetarme:
   controller_joint_names: ["Joint_0", "Joint_1", "Joint_2", "Joint_3", "Joint_4", "Joint_5", "Joint_6"]
   home_position: [0.0, 1.0, -1.0, 0.0, 0.0, 0.0, 0.0]
-  reference_frame: "world" # world base_link
-  tipLink: "tool0"
+  reference_frame: "base_link" # world base_link
+  tipLink: "tool0"  # shotcrete_base_link tool0
   tipJoint: "Joint_6"
   numberJoint: 7
   path_urdf: "/home/robetarme_user/ros2_ws/src/wp5-robotic-arms/urdf/robetarme.urdf"

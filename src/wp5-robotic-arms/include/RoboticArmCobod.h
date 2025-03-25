@@ -39,22 +39,22 @@ public:
       const Eigen::VectorXd& desiredTwist,
       const Eigen::VectorXd& wrenchFromSensor) override;
 
-  /**
-   * @brief Get the forward kinematics of the robotic arm.
-   * @param jointPos Joint positions of the robotic arm.
-   */
-  std::pair<Eigen::Quaterniond, Eigen::Vector3d> getFKGeo(const std::vector<double>& jointPos) override;
+  // /**
+  //  * @brief Get the forward kinematics of the robotic arm.
+  //  * @param jointPos Joint positions of the robotic arm.
+  //  */
+  // std::pair<Eigen::Quaterniond, Eigen::Vector3d> getFKGeo(const std::vector<double>& jointPos) override;
 
-  /**
-   * @brief Get the inverse kinematics of the robotic arm.
-   * @param quaternion Quaternion of the end effector.
-   * @param position Position of the end effector.
-   * @param jointPos Vector of joint positions of the robotic arm.
-   * @return Pair of the return code and the next joint positions.
-   */
-  bool getIKGeo(const Eigen::Quaterniond& quaternion,
-                const Eigen::Vector3d& position,
-                std::vector<std::vector<double>>& jointPos) override;
+  // /**
+  //  * @brief Get the inverse kinematics of the robotic arm.
+  //  * @param quaternion Quaternion of the end effector.
+  //  * @param position Position of the end effector.
+  //  * @param jointPos Vector of joint positions of the robotic arm.
+  //  * @return Pair of the return code and the next joint positions.
+  //  */
+  // bool getIKGeo(const Eigen::Quaterniond& quaternion,
+                // const Eigen::Vector3d& position,
+                // std::vector<std::vector<double>>& jointPos) override;
 
   bool saveTwistsToFiles(const std::string& desiredTwistFilename,
                          const std::string& deltaTwistFilename,

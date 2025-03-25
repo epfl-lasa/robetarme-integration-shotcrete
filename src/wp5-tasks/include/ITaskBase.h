@@ -16,10 +16,6 @@
 #include <memory>
 
 #include "IRoboticArmBase.h"
-// #include "IToolsBase.h"
-// #include "PolygonCoverage.h"
-#include "RoboticArmIiwa7.h"
-#include "RoboticArmUr5.h"
 #include "RosInterfaceHumble.hpp"
 // #include "TaskShotcreteKUL.h"
 // #include "ToolsShotcrete.h"
@@ -242,6 +238,6 @@ private:
   //  */
   // ros::Rate loopRate_;
 
-  Eigen::Vector3d getDistanceBetweenFrame();
+  // Eigen::Vector3d getDistanceBetweenFrame();
   bool initializeNodeAndRate();
 };

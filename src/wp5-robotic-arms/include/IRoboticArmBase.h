@@ -28,7 +28,6 @@
 #include <vector>
 
 #include "controllers/ControllerFactory.hpp"
-#include "ik_geo.h"
 #include "state_representation/parameters/ParameterInterface.hpp"
 #include "state_representation/space/cartesian/CartesianState.hpp"
 #include "state_representation/space/joint/JointState.hpp"
@@ -156,13 +155,13 @@ public:
   Eigen::VectorXd computeSingularValues(const Eigen::MatrixXd &J) const;
 
   // You can keep this function if it's a part of the common interface
-  virtual bool getIKGeo(const Eigen::Quaterniond &quaternion,
-                        const Eigen::Vector3d &position,
-                        std::vector<std::vector<double>> &jointPos) {
-    // Default implementation (if necessary)
-    return false; // Return false for non-UR5 arms
-  }
-  virtual std::pair<Eigen::Quaterniond, Eigen::Vector3d> getFKGeo(const std::vector<double> &jointPos) = 0;
+  // virtual bool getIKGeo(const Eigen::Quaterniond &quaternion,
+  //                       const Eigen::Vector3d &position,
+  //                       std::vector<std::vector<double>> &jointPos) {
+  //   // Default implementation (if necessary)
+  //   return false; // Return false for non-UR5 arms
+  // }
+  // virtual std::pair<Eigen::Quaterniond, Eigen::Vector3d> getFKGeo(const std::vector<double> &jointPos) = 0;
 
   virtual bool saveTwistsToFiles(const std::string &desiredTwistFilename,
                                  const std::string &deltaTwistFilename,
@@ -184,7 +183,7 @@ public:
                                                const std::vector<double> &target_configuration) const;
   bool checkCollision(const std::vector<double> &jointConfig) const;
   std::vector<std::pair<double, double>> getJointLimits() const;
-  bool checkIkGeoUp() const;
+  // bool checkIkGeoUp() const;
 
 protected:
   /**
@@ -201,7 +200,7 @@ protected:
   std::string pathUrdf_ = "";
   std::unique_ptr<robot_model::Model> model_;
   Eigen::VectorXd twist_;
-  bool ikGeoUp_ = false;
+  // bool ikGeoUp_ = false;
   TRAC_IK::TRAC_IK *ikSolver; // Pointer to the IK solver
   Eigen::Affine3d transformEigen_;
 

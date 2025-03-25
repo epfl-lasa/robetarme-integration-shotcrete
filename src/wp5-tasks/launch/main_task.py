@@ -7,7 +7,7 @@ def generate_launch_description():
     # Declare the 'taskType' argument with a default value
     task_type_arg = DeclareLaunchArgument(
         'taskType',
-        default_value='shotcrete',
+        default_value='shotcreteKUL',
         description='Type of task to execute'
     )
 

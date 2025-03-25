@@ -277,7 +277,7 @@ std::pair<bool, std::vector<std::vector<double>>> IRoboticArmBase::getUniqueTrac
   return {foundSolutions, iksFirstPosition};
 }
 
-bool IRoboticArmBase::checkIkGeoUp() const { return (ikGeoUp_); }
+// bool IRoboticArmBase::checkIkGeoUp() const { return (ikGeoUp_); }
 
 // Helper function to load a URDF from file
 std::string loadURDF(const std::string& file_path) {

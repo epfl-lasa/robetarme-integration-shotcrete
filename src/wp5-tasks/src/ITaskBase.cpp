@@ -254,17 +254,17 @@ Eigen::Vector3d computeSpeedLinearDS(const Eigen::Vector3d &x, const Eigen::Vect
 //   return positionReached;
 // }
 
-Eigen::Vector3d ITaskBase::getDistanceBetweenFrame() {
-  // set and get desired speed
-  tuple<vector<double>, vector<double>, vector<double>> stateJoints;
-  stateJoints = rosInterface_->receiveState();
-  vector<double> actualJoint = get<0>(stateJoints);
-  pair<Quaterniond, Vector3d> pairActualQuatPos = roboticArm_->getFKPinocchio(actualJoint);
-  pair<Quaterniond, Vector3d> pairActualQuatPosGeo = roboticArm_->getFKGeo(actualJoint);
-  Eigen::Vector3d DistanceFrame;
-  DistanceFrame << pairActualQuatPos.second - pairActualQuatPosGeo.second;
-  return DistanceFrame;
-}
+// Eigen::Vector3d ITaskBase::getDistanceBetweenFrame() {
+//   // set and get desired speed
+//   tuple<vector<double>, vector<double>, vector<double>> stateJoints;
+//   stateJoints = rosInterface_->receiveState();
+//   vector<double> actualJoint = get<0>(stateJoints);
+//   pair<Quaterniond, Vector3d> pairActualQuatPos = roboticArm_->getFKPinocchio(actualJoint);
+//   pair<Quaterniond, Vector3d> pairActualQuatPosGeo = roboticArm_->getFKGeo(actualJoint);
+//   Eigen::Vector3d DistanceFrame;
+//   DistanceFrame << pairActualQuatPos.second - pairActualQuatPosGeo.second;
+//   return DistanceFrame;
+// }
 
 vector<vector<double>> ITaskBase::getSortedConfigsByDistanceToLastThreeJoints(
     const vector<vector<vector<double>>> &allIks, int iMin) {

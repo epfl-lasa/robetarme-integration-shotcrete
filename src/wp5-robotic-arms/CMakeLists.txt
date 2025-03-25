@@ -21,6 +21,7 @@ add_compile_definitions(
 )
 
 # Add external libraries
+add_subdirectory(libs/ik-geo-cpp EXCLUDE_FROM_ALL)
 add_subdirectory(libs/trac-ik/trac_ik_lib)
 
 # Find ROS 2 packages and other dependencies
@@ -32,14 +33,13 @@ find_package(control_libraries REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(pybind11 REQUIRED)
 find_package(OsqpEigen REQUIRED)
+# find_package(robetarme_description REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 # Create the main library
 add_library(${PROJECT_NAME} SHARED
     src/IRoboticArmBase.cpp
     src/RoboticArmCobod.cpp
-    src/RoboticArmIiwa7.cpp
-    src/RoboticArmUr5.cpp
 )
 
 # Set properties for the library
@@ -51,6 +51,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # Add include directories for the library
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    # ${CMAKE_CURRENT_SOURCE_DIR}/libs/ik-geo-cpp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/libs/trac-ik/trac_ik_lib/include
     ${YAML_CPP_INCLUDE_DIR}
     ${EIGEN3_INCLUDE_DIRS}
@@ -64,6 +65,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ${EIGEN3_LIBRARIES}
     ${control_libraries_LIBRARIES}
     OsqpEigen::OsqpEigen
+    # ik_geo
     trac_ik
     rclcpp::rclcpp
     pybind11::embed
@@ -78,6 +80,11 @@ install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
 )
 
+# Install the ik_geo library manually
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/libs/ik-geo-cpp/rust-wrapper/target/release/libik_geo.so
+#     DESTINATION lib
+#     PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+# )
 
 # Install directories
 install(DIRECTORY urdf/ DESTINATION share/${PROJECT_NAME}/urdf
@@ -87,7 +94,8 @@ install(DIRECTORY meshes/ DESTINATION share/${PROJECT_NAME}/meshes)
 install(DIRECTORY include/ DESTINATION include)
 
 # Install external library includes
-
+# install(DIRECTORY libs/ik-geo-cpp/include/
+#     DESTINATION include/libs/ik-geo-cpp)
 install(DIRECTORY libs/trac-ik/trac_ik_lib/include/
     DESTINATION include/libs/trac-ik)
 
@@ -105,6 +113,7 @@ ament_export_dependencies(
 # Export include directories
 ament_export_include_directories(
     include
+    # include/libs/ik-geo-cpp
     include/libs/trac-ik
 )
 
