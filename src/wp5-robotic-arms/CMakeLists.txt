@@ -21,7 +21,7 @@ add_compile_definitions(
 )
 
 # Add external libraries
-add_subdirectory(libs/ik-geo-cpp EXCLUDE_FROM_ALL)
+# add_subdirectory(libs/ik-geo-cpp EXCLUDE_FROM_ALL)
 add_subdirectory(libs/trac-ik/trac_ik_lib)
 
 # Find ROS 2 packages and other dependencies

@@ -4,7 +4,7 @@
 ################################################################################
 
 services:
-  ros-humble-integration-shotcrete_container:
+  ros_humble_integration_shotcrete_container:
     env_file:
       - .env
     build:
@@ -29,7 +29,7 @@ services:
     # The same naming convention applies to the container's name as well.
     # The first part is the prefix
     # `ros_noetic_`. Then the byte id, and at the end `_development_container`.
-    container_name: ros-humble-integration-shotcrete_container
+    container_name: ros_humble_integration_shotcrete_container
     network_mode: "host"
     privileged: True
     deploy:
