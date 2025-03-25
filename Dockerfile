@@ -187,9 +187,10 @@ ENTRYPOINT ["/entrypoint.sh"]
 #-------------------------------------------------------------------------------
 RUN echo "cd /home/${USER}/ros2_ws && \
     source /opt/ros/${ROS_DISTRO}/setup.bash&& \
+    colcon build && \
     source install/setup.bash"  >> ${HOME}/.bashrc ;
 # RUN echo "source devel/setup.bash" >> ~/.bashrc
-# RUN echo "roslaunch wp5_tasks integrationShotcreteKUL.launch" >> ~/.bashrc
+# RUN cho "ros2 launch wp5_tasks main_taske.py" >> ~/.bashrc
 # USER ${USER}
 
 CMD ["/bin/bash"]
