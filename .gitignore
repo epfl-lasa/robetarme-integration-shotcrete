@@ -9,6 +9,7 @@ __pycache__/
 
 #config file
 # config/*
+
 /**/.DS_Store
 .env
 /log
@@ -19,7 +20,7 @@ __pycache__/
 .vscode
 
 # Ignore all directories containing "data" in their path
-/data
+/data/*
 /src/wp5-robotic-arms/txts
 /src/wp5-tasks/txts
 

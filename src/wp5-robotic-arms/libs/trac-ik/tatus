@@ -1,0 +1,316 @@
+[1mdiff --git a/trac_ik_kinematics_plugin/include/trac_ik/trac_ik_kinematics_plugin.hpp b/trac_ik_kinematics_plugin/include/trac_ik/trac_ik_kinematics_plugin.hpp[m
+[1mindex 1baf29f..26725af 100644[m
+[1m--- a/trac_ik_kinematics_plugin/include/trac_ik/trac_ik_kinematics_plugin.hpp[m
+[1m+++ b/trac_ik_kinematics_plugin/include/trac_ik/trac_ik_kinematics_plugin.hpp[m
+[36m@@ -31,8 +31,8 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ #ifndef TRAC_IK_KINEMATICS_PLUGIN_[m
+ #define TRAC_IK_KINEMATICS_PLUGIN_[m
+ [m
+[31m-#include <moveit/kinematics_base/kinematics_base.hpp>[m
+[31m-#include <moveit/robot_model/robot_model.hpp>[m
+[32m+[m[32m#include <moveit/kinematics_base/kinematics_base.h>[m
+[32m+[m[32m#include <moveit/robot_model/robot_model.h>[m
+ #include <kdl/chain.hpp>[m
+ #include <kdl/jntarray.hpp>[m
+ [m
+[1mdiff --git a/trac_ik_kinematics_plugin/src/trac_ik_kinematics_plugin.cpp b/trac_ik_kinematics_plugin/src/trac_ik_kinematics_plugin.cpp[m
+[1mindex bae5a34..7b68834 100644[m
+[1m--- a/trac_ik_kinematics_plugin/src/trac_ik_kinematics_plugin.cpp[m
+[1m+++ b/trac_ik_kinematics_plugin/src/trac_ik_kinematics_plugin.cpp[m
+[36m@@ -29,7 +29,7 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ ********************************************************************************/[m
+ [m
+ [m
+[31m-#include <urdf/model.hpp>[m
+[32m+[m[32m#include <urdf/model.h>[m
+ #include <tf2_kdl/tf2_kdl.hpp>[m
+ #include <algorithm>[m
+ #include <kdl/tree.hpp>[m
+[36m@@ -37,8 +37,8 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ #include <trac_ik/trac_ik.hpp>[m
+ #include <trac_ik/trac_ik_kinematics_plugin.hpp>[m
+ #include <limits>[m
+[31m-#include <moveit/robot_state/robot_state.hpp>[m
+[31m-#include <trac_ik_kinematics_plugin/trac_ik_kinematics_parameters.hpp>[m
+[32m+[m[32m#include <moveit/robot_state/robot_state.h>[m
+[32m+[m[32m#include "trac_ik_kinematics_parameters.hpp"[m
+ [m
+ namespace trac_ik_kinematics_plugin[m
+ {[m
+[1mdiff --git a/trac_ik_lib/include/trac_ik/nlopt_ik.hpp b/trac_ik_lib/include/trac_ik/nlopt_ik.hpp[m
+[1mindex a0f24e6..034c4c9 100644[m
+[1m--- a/trac_ik_lib/include/trac_ik/nlopt_ik.hpp[m
+[1m+++ b/trac_ik_lib/include/trac_ik/nlopt_ik.hpp[m
+[36m@@ -46,8 +46,7 @@[m [mclass NLOPT_IK[m
+ {[m
+   friend class TRAC_IK::TRAC_IK;[m
+ public:[m
+[31m-  NLOPT_IK(rclcpp::Node::SharedPtr _nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime = 0.005, double _eps = 1e-3, OptType type = SumSq);[m
+[31m-  NLOPT_IK(const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime = 0.005, double _eps = 1e-3, OptType _type = SumSq, const rclcpp::Logger& _logger = rclcpp::get_logger("trac_ik.trac_ik_lib"));[m
+[32m+[m[32m  NLOPT_IK(rclcpp::Node::SharedPtr nh, const KDL::Chain& chain, const KDL::JntArray& q_min, const KDL::JntArray& q_max, double maxtime = 0.005, double eps = 1e-3, OptType type = SumSq);[m
+ [m
+   ~NLOPT_IK() {};[m
+   int CartToJnt(const KDL::JntArray& q_init, const KDL::Frame& p_in, KDL::JntArray& q_out, const KDL::Twist bounds = KDL::Twist::Zero(), const KDL::JntArray& q_desired = KDL::JntArray());[m
+[36m@@ -75,7 +74,7 @@[m [mprivate:[m
+     aborted = false;[m
+   }[m
+ [m
+[31m-  rclcpp::Logger logger_;[m
+[32m+[m[32m  rclcpp::Node::SharedPtr nh_;[m
+   rclcpp::Clock system_clock;[m
+ [m
+   std::vector<double> lb;[m
+[1mdiff --git a/trac_ik_lib/include/trac_ik/trac_ik.hpp b/trac_ik_lib/include/trac_ik/trac_ik.hpp[m
+[1mindex d1f6065..2c7e311 100644[m
+[1m--- a/trac_ik_lib/include/trac_ik/trac_ik.hpp[m
+[1m+++ b/trac_ik_lib/include/trac_ik/trac_ik.hpp[m
+[36m@@ -34,7 +34,6 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ [m
+ #include <trac_ik/nlopt_ik.hpp>[m
+ #include <kdl/chainjnttojacsolver.hpp>[m
+[31m-#include <rclcpp/rclcpp.hpp>[m
+ #include <thread>[m
+ #include <mutex>[m
+ #include <memory>[m
+[36m@@ -47,10 +46,9 @@[m [menum SolveType { Speed, Distance, Manip1, Manip2 };[m
+ class TRAC_IK[m
+ {[m
+ public:[m
+[31m-  TRAC_IK(rclcpp::Node::SharedPtr _nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime = 0.005, double _eps = 1e-5, SolveType _type = Speed);[m
+[31m-  TRAC_IK(const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime = 0.005, double _eps = 1e-5, SolveType _type = Speed, const rclcpp::Logger& logger = rclcpp::get_logger("trac_ik.trac_ik_lib"));[m
+[32m+[m[32m  TRAC_IK(rclcpp::Node::SharedPtr nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime = 0.005, double _eps = 1e-5, SolveType _type = Speed);[m
+ [m
+[31m-  TRAC_IK(rclcpp::Node::SharedPtr _nh, const std::string& _base_link, const std::string& _tip_link, const std::string& _URDF_param = "robot_description", double _maxtime = 0.005, double _eps = 1e-5, SolveType _type = Speed);[m
+[32m+[m[32m  TRAC_IK(rclcpp::Node::SharedPtr nh, const std::string& base_link, const std::string& tip_link, const std::string& URDF_param = "robot_description", double _maxtime = 0.005, double _eps = 1e-5, SolveType _type = Speed);[m
+ [m
+   ~TRAC_IK();[m
+ [m
+[36m@@ -84,7 +82,7 @@[m [mpublic:[m
+   {[m
+     lb = lb_;[m
+     ub = ub_;[m
+[31m-    nl_solver.reset(new NLOPT_IK::NLOPT_IK(chain, lb, ub, maxtime, eps, NLOPT_IK::SumSq, logger));[m
+[32m+[m[32m    nl_solver.reset(new NLOPT_IK::NLOPT_IK(nh_, chain, lb, ub, maxtime, eps, NLOPT_IK::SumSq));[m
+     iksolver.reset(new KDL::ChainIkSolverPos_TL(chain, lb, ub, maxtime, eps, true, true));[m
+     return true;[m
+   }[m
+[36m@@ -108,7 +106,7 @@[m [mpublic:[m
+   }[m
+ [m
+ private:[m
+[31m-  rclcpp::Logger logger;[m
+[32m+[m[32m  rclcpp::Node::SharedPtr nh_;[m
+   bool initialized;[m
+   KDL::Chain chain;[m
+   KDL::JntArray lb, ub;[m
+[1mdiff --git a/trac_ik_lib/src/kdl_tl.cpp b/trac_ik_lib/src/kdl_tl.cpp[m
+[1mindex 1940e85..1e8faad 100644[m
+[1m--- a/trac_ik_lib/src/kdl_tl.cpp[m
+[1m+++ b/trac_ik_lib/src/kdl_tl.cpp[m
+[36m@@ -29,6 +29,7 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ ********************************************************************************/[m
+ [m
+ #include <trac_ik/kdl_tl.hpp>[m
+[32m+[m[32m#include <rclcpp/rclcpp.hpp>[m
+ #include <cfloat>[m
+ [m
+ namespace KDL[m
+[1mdiff --git a/trac_ik_lib/src/nlopt_ik.cpp b/trac_ik_lib/src/nlopt_ik.cpp[m
+[1mindex 9aae7e0..fb4f483 100644[m
+[1m--- a/trac_ik_lib/src/nlopt_ik.cpp[m
+[1m+++ b/trac_ik_lib/src/nlopt_ik.cpp[m
+[36m@@ -29,6 +29,7 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ ********************************************************************************/[m
+ [m
+ #include <trac_ik/nlopt_ik.hpp>[m
+[32m+[m[32m#include <rclcpp/rclcpp.hpp>[m
+ #include <limits>[m
+ #include <trac_ik/dual_quaternion.h>[m
+ #include <cmath>[m
+[36m@@ -191,11 +192,9 @@[m [mvoid constrainfuncm(uint m, double* result, uint n, const double* x, double* gra[m
+   }[m
+ }[m
+ [m
+[31m-NLOPT_IK::NLOPT_IK(rclcpp::Node::SharedPtr _nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, OptType _type):[m
+[31m-  NLOPT_IK(chain, _q_min, _q_max, _maxtime, _eps, _type, _nh->get_logger()){}[m
+ [m
+[31m-NLOPT_IK::NLOPT_IK(const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, OptType _type, const rclcpp::Logger& _logger):[m
+[31m-  logger_(_logger), chain(_chain), fksolver(chain), maxtime(_maxtime), eps(std::abs(_eps)), TYPE(_type)[m
+[32m+[m[32mNLOPT_IK::NLOPT_IK(rclcpp::Node::SharedPtr nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, OptType _type):[m
+[32m+[m[32m  nh_(nh), chain(_chain), fksolver(chain), maxtime(_maxtime), eps(std::abs(_eps)), TYPE(_type)[m
+ {[m
+   assert(chain.getNrOfJoints() == _q_min.data.size());[m
+   assert(chain.getNrOfJoints() == _q_max.data.size());[m
+[36m@@ -207,7 +206,7 @@[m [mNLOPT_IK::NLOPT_IK(const KDL::Chain& _chain, const KDL::JntArray& _q_min, const[m
+ [m
+   if (chain.getNrOfJoints() < 2)[m
+   {[m
+[31m-    RCLCPP_WARN_THROTTLE(logger_, system_clock, 1000.0, "NLOpt_IK can only be run for chains of length 2 or more");[m
+[32m+[m[32m    RCLCPP_WARN_THROTTLE(nh_->get_logger(), system_clock, 1000.0, "NLOpt_IK can only be run for chains of length 2 or more");[m
+     return;[m
+   }[m
+   opt = nlopt::opt(nlopt::LD_SLSQP, _chain.getNrOfJoints());[m
+[36m@@ -301,11 +300,11 @@[m [mvoid NLOPT_IK::cartSumSquaredError(const std::vector<double>& x, double error[])[m
+   int rc = fksolver.JntToCart(q, currentPose);[m
+ [m
+   if (rc < 0)[m
+[31m-    RCLCPP_FATAL_STREAM(logger_, "KDL FKSolver is failing: " << q.data);[m
+[32m+[m[32m    RCLCPP_FATAL_STREAM(nh_->get_logger(), "KDL FKSolver is failing: " << q.data);[m
+ [m
+   if (std::isnan(currentPose.p.x()))[m
+   {[m
+[31m-    RCLCPP_ERROR(logger_, "NaNs from NLOpt!!");[m
+[32m+[m[32m    RCLCPP_ERROR(nh_->get_logger(), "NaNs from NLOpt!!");[m
+     error[0] = std::numeric_limits<float>::max();[m
+     progress = -1;[m
+     return;[m
+[36m@@ -352,12 +351,12 @@[m [mvoid NLOPT_IK::cartL2NormError(const std::vector<double>& x, double error[])[m
+   int rc = fksolver.JntToCart(q, currentPose);[m
+ [m
+   if (rc < 0)[m
+[31m-    RCLCPP_FATAL_STREAM(logger_, "KDL FKSolver is failing: " << q.data);[m
+[32m+[m[32m    RCLCPP_FATAL_STREAM(nh_->get_logger(), "KDL FKSolver is failing: " << q.data);[m
+ [m
+ [m
+   if (std::isnan(currentPose.p.x()))[m
+   {[m
+[31m-    RCLCPP_ERROR(logger_, "NaNs from NLOpt!!");[m
+[32m+[m[32m    RCLCPP_ERROR(nh_->get_logger(), "NaNs from NLOpt!!");[m
+     error[0] = std::numeric_limits<float>::max();[m
+     progress = -1;[m
+     return;[m
+[36m@@ -405,12 +404,12 @@[m [mvoid NLOPT_IK::cartDQError(const std::vector<double>& x, double error[])[m
+   int rc = fksolver.JntToCart(q, currentPose);[m
+ [m
+   if (rc < 0)[m
+[31m-    RCLCPP_FATAL_STREAM(logger_, "KDL FKSolver is failing: " << q.data);[m
+[32m+[m[32m    RCLCPP_FATAL_STREAM(nh_->get_logger(), "KDL FKSolver is failing: " << q.data);[m
+ [m
+ [m
+   if (std::isnan(currentPose.p.x()))[m
+   {[m
+[31m-    RCLCPP_ERROR(logger_, "NaNs from NLOpt!!");[m
+[32m+[m[32m    RCLCPP_ERROR(nh_->get_logger(), "NaNs from NLOpt!!");[m
+     error[0] = std::numeric_limits<float>::max();[m
+     progress = -1;[m
+     return;[m
+[36m@@ -461,13 +460,13 @@[m [mint NLOPT_IK::CartToJnt(const KDL::JntArray &q_init, const KDL::Frame &p_in, KDL[m
+   [m
+   if (chain.getNrOfJoints() < 2)[m
+   {[m
+[31m-    RCLCPP_ERROR_THROTTLE(logger_, system_clock, 1000.0, "NLOpt_IK can only be run for chains of length 2 or more");[m
+[32m+[m[32m    RCLCPP_ERROR_THROTTLE(nh_->get_logger(), system_clock, 1000.0, "NLOpt_IK can only be run for chains of length 2 or more");[m
+     return -3;[m
+   }[m
+ [m
+   if (q_init.data.size() != types.size())[m
+   {[m
+[31m-    RCLCPP_ERROR_THROTTLE(logger_, system_clock, 1000.0, "IK seeded with wrong number of joints.  Expected %d but got %d", (int)types.size(), (int)q_init.data.size());[m
+[32m+[m[32m    RCLCPP_ERROR_THROTTLE(nh_->get_logger(), system_clock, 1000.0, "IK seeded with wrong number of joints.  Expected %d but got %d", (int)types.size(), (int)q_init.data.size());[m
+     return -3;[m
+   }[m
+ [m
+[1mdiff --git a/trac_ik_lib/src/trac_ik.cpp b/trac_ik_lib/src/trac_ik.cpp[m
+[1mindex 76c81cd..4562b4d 100644[m
+[1m--- a/trac_ik_lib/src/trac_ik.cpp[m
+[1m+++ b/trac_ik_lib/src/trac_ik.cpp[m
+[36m@@ -34,13 +34,13 @@[m [mOF THE POSSIBILITY OF SUCH DAMAGE.[m
+ #include <rclcpp/rclcpp.hpp>[m
+ #include <limits>[m
+ #include <kdl_parser/kdl_parser.hpp>[m
+[31m-#include <urdf/model.hpp>[m
+[32m+[m[32m#include <urdf/model.h>[m
+ [m
+ namespace TRAC_IK[m
+ {[m
+ [m
+[31m-TRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr _nh, const std::string& _base_link, const std::string& _tip_link, const std::string& _URDF_param, double _maxtime, double _eps, SolveType _type) :[m
+[31m-  logger(_nh->get_logger()),[m
+[32m+[m[32m  TRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr nh, const std::string& base_link, const std::string& tip_link, const std::string& URDF_param, double _maxtime, double _eps, SolveType _type) :[m
+[32m+[m[32m  nh_(nh),[m
+   initialized(false),[m
+   eps(_eps),[m
+   maxtime(_maxtime),[m
+[36m@@ -50,32 +50,28 @@[m [mTRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr _nh, const std::string& _base_link, con[m
+   urdf::Model robot_model;[m
+   std::string xml_string;[m
+ [m
+[31m-  if(!_nh->has_parameter(_URDF_param))[m
+[31m-    xml_string = _nh->declare_parameter(_URDF_param, std::string(""));[m
+[32m+[m[32m  if(!nh_->has_parameter(URDF_param))[m
+[32m+[m[32m    xml_string = nh_->declare_parameter(URDF_param, std::string(""));[m
+   else[m
+[31m-    _nh->get_parameter(_URDF_param, xml_string);[m
+[31m-[m
+[32m+[m[32m    nh_->get_parameter(URDF_param, xml_string);[m
+[32m+[m[41m  [m
+   if(xml_string.empty())[m
+   {[m
+[31m-    RCLCPP_FATAL(_nh->get_logger(), "Could not load the xml from parameter: %s", _URDF_param.c_str());[m
+[32m+[m[32m    RCLCPP_FATAL(nh_->get_logger(), "Could not load the xml from parameter: %s", URDF_param.c_str());[m
+     return;[m
+   }[m
+ [m
+[31m-  if (!robot_model.initString(xml_string))[m
+[31m-  {[m
+[31m-    RCLCPP_FATAL(logger, "Unable to initialize urdf::Model from robot description.");[m
+[31m-    return;[m
+[31m-  }[m
+[32m+[m[32m  robot_model.initString(xml_string);[m
+ [m
+[31m-  RCLCPP_DEBUG_STREAM(logger, "Reading joints and links from URDF");[m
+[32m+[m[32m  RCLCPP_DEBUG_STREAM(nh_->get_logger(), "Reading joints and links from URDF");[m
+ [m
+   KDL::Tree tree;[m
+ [m
+   if (!kdl_parser::treeFromUrdfModel(robot_model, tree))[m
+[31m-    RCLCPP_FATAL(logger, "Failed to extract kdl tree from xml robot description");[m
+[32m+[m[32m    RCLCPP_FATAL(nh_->get_logger(), "Failed to extract kdl tree from xml robot description");[m
+ [m
+[31m-  if (!tree.getChain(_base_link, _tip_link, chain))[m
+[31m-    RCLCPP_FATAL(logger, "Couldn't find chain %s to %s", _base_link.c_str(), _tip_link.c_str());[m
+[32m+[m[32m  if (!tree.getChain(base_link, tip_link, chain))[m
+[32m+[m[32m    RCLCPP_FATAL(nh_->get_logger(), "Couldn't find chain %s to %s", base_link.c_str(), tip_link.c_str());[m
+ [m
+   std::vector<KDL::Segment> chain_segs = chain.segments;[m
+ [m
+[36m@@ -123,18 +119,16 @@[m [mTRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr _nh, const std::string& _base_link, con[m
+         lb(joint_num - 1) = std::numeric_limits<float>::lowest();[m
+         ub(joint_num - 1) = std::numeric_limits<float>::max();[m
+       }[m
+[31m-      RCLCPP_DEBUG_STREAM(logger, "IK Using joint " << joint->name << " " << lb(joint_num - 1) << " " << ub(joint_num - 1));[m
+[32m+[m[32m      RCLCPP_DEBUG_STREAM(nh_->get_logger(), "IK Using joint " << joint->name << " " << lb(joint_num - 1) << " " << ub(joint_num - 1));[m
+     }[m
+   }[m
+ [m
+   initialize();[m
+ }[m
+ [m
+[31m-TRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr _nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, SolveType _type):[m
+[31m-  TRAC_IK(_chain, _q_min, _q_max, _maxtime, _eps, _type, _nh->get_logger()) {}[m
+ [m
+[31m-TRAC_IK::TRAC_IK(const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, SolveType _type, const rclcpp::Logger& _logger):[m
+[31m-  logger(_logger),[m
+[32m+[m[32m  TRAC_IK::TRAC_IK(rclcpp::Node::SharedPtr nh, const KDL::Chain& _chain, const KDL::JntArray& _q_min, const KDL::JntArray& _q_max, double _maxtime, double _eps, SolveType _type):[m
+[32m+[m[32m  nh_(nh),[m
+   initialized(false),[m
+   chain(_chain),[m
+   lb(_q_min),[m
+[36m@@ -153,7 +147,7 @@[m [mvoid TRAC_IK::initialize()[m
+   assert(chain.getNrOfJoints() == ub.data.size());[m
+ [m
+   jacsolver.reset(new KDL::ChainJntToJacSolver(chain));[m
+[31m-  nl_solver.reset(new NLOPT_IK::NLOPT_IK(chain, lb, ub, maxtime, eps, NLOPT_IK::SumSq, logger));[m
+[32m+[m[32m  nl_solver.reset(new NLOPT_IK::NLOPT_IK(nh_, chain, lb, ub, maxtime, eps, NLOPT_IK::SumSq));[m
+   iksolver.reset(new KDL::ChainIkSolverPos_TL(chain, lb, ub, maxtime, eps, true, true));[m
+ [m
+   for (uint i = 0; i < chain.segments.size(); i++)[m
+[36m@@ -418,7 +412,7 @@[m [mint TRAC_IK::CartToJnt(const KDL::JntArray &q_init, const KDL::Frame &p_in, KDL:[m
+ [m
+   if (!initialized)[m
+   {[m
+[31m-    RCLCPP_ERROR(logger, "TRAC-IK was not properly initialized with a valid chain or limits.  IK cannot proceed");[m
+[32m+[m[32m    RCLCPP_ERROR(nh_->get_logger(), "TRAC-IK was not properly initialized with a valid chain or limits.  IK cannot proceed");[m
+     return -1;[m
+   }[m
+ [m
